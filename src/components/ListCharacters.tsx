@@ -1,12 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { getCharacters } from "../api/Characters";
 import { useEffect, useState } from "react";
-import { ApiResponseGetCharacter } from "../types";
+import { ApiResponse } from "../types";
 import Carrousel from "./Carrousel";
-import NewCarrousel from "./NewCarrousel";
 
 const ListCharacters = () => {
-  const [characters, setCharacters] = useState<ApiResponseGetCharacter>();
+  const [characters, setCharacters] = useState<ApiResponse>();
 
   const { data } = useQuery({
     queryFn: getCharacters,
@@ -20,7 +19,7 @@ const ListCharacters = () => {
   return (
     <div>
       {characters && characters?.items.length > 0 ? (
-        <NewCarrousel characters={characters.items} />
+        <Carrousel characters={characters.items} />
       ) : (
         "Loading..."
       )}

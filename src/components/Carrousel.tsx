@@ -1,69 +1,62 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Character } from "../types";
-// Asegúrate de que la ruta es correcta
+import Card from "./Card";
+import { Link } from "react-router-dom";
 
 const Carrousel = ({ characters }: { characters: Character[] }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const slides = characters;
+  const [isPaused, setIsPaused] = useState(false);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setCurrentSlide((prevSlide) => (prevSlide + 1) % characters.length);
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+  const stopSlideShow = () => {
+    setIsPaused(true);
   };
+
+  const startSlideShow = () => {
+    setIsPaused(false);
+  };
+
+  useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(nextSlide, 3000); // Cambia cada 3 segundos
+      return () => clearInterval(interval);
+    }
+  }, [isPaused, currentSlide]);
 
   return (
-    <div className=" w-full flex justify-center ">
-      <div className="relative w-full h-full overflow-hidden rounded-lg">
+    <div className="w-5/6 min-h-screen mx-auto flex flex-col items-center justify-center">
+      <p className="font-black text-yellow-500 text-5xl lg:text-7xl xl:text-9xl p-2 mb-2">
+        Dragonball-api
+      </p>
+      <div
+        className="w-full h-96 mx-auto relative overflow-hidden 
+        p-3 rounded-lg
+        "
+      >
         <div
-          className="relative h-full flex transition-transform duration-700 ease-in-out"
+          className="flex h-full transition-transform duration-700 ease-in-out"
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
-          {slides.map((item: Character) => (
-            <div
-              key={item.id}
-              className="w-full flex-shrink-0 flex items-center justify-center"
-            >
-              <img
-                src={item.image}
-                className=" object-cover h-1/2"
-                alt={`Slide ${item.id}`}
+          {characters.map((character: Character) => (
+            <div key={character.id} className="w-full flex-shrink-0">
+              <Card
+                character={character}
+                stopSlideShow={stopSlideShow}
+                startSlideShow={startSlideShow}
               />
             </div>
           ))}
         </div>
-        <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-3 z-30">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              className={`w-3 h-3 rounded-full ${
-                currentSlide === index ? "bg-white" : "bg-gray-300"
-              }`}
-              aria-label={`Slide ${index + 1}`}
-              onClick={() => setCurrentSlide(index)}
-            ></button>
-          ))}
-        </div>
-        <button
-          type="button"
-          className="absolute top-1/2 left-0 transform -translate-y-1/2 px-4 py-2 z-30 bg-white/30 dark:bg-gray-800/30"
-          aria-label="Previous slide"
-          onClick={prevSlide}
-        >
-          <span className="text-black dark:text-white text-2xl">&#9664;</span>
-        </button>
-        <button
-          type="button"
-          className="absolute top-1/2 right-0 transform -translate-y-1/2 px-4 py-2 z-30 bg-white/30 dark:bg-gray-800/30"
-          aria-label="Next slide"
-          onClick={nextSlide}
-        >
-          <span className="text-black dark:text-white text-2xl">&#9654;</span>
-        </button>
       </div>
+      <Link
+        className="mt-5 bg-yellow-500 hover:bg-yellow-400 hover:scale-105 text-white font-bold py-2 px-4 rounded-lg"
+        to={"/characters"}
+      >
+        Ver Todos
+      </Link>
     </div>
   );
 };
