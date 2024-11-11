@@ -55,7 +55,7 @@ const Carrousel = ({ characters }: { characters: Character[] }) => {
         className="mt-5 bg-yellow-500 hover:bg-yellow-400 hover:scale-105 text-white font-bold py-2 px-4 rounded-lg"
         to={"/characters"}
       >
-        Ver Todos
+        Show all characters
       </Link>
     </div>
   );
