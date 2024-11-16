@@ -22,7 +22,7 @@ const Card = ({ character, stopSlideShow, startSlideShow }: CardProps) => {
       }}
     >
       {/* Contenedor de la imagen */}
-      <div className="w-1/3 h-full flex justify-center items-center ">
+      <div className="md:w-1/3 h-full flex justify-center items-center ">
         <img
           draggable="false"
           className="object-contain w-full h-full hover:scale-105"
@@ -30,7 +30,7 @@ const Card = ({ character, stopSlideShow, startSlideShow }: CardProps) => {
           alt={character.name}
         />
       </div>
-      <div className="w-1/2 h-full text-white space-y-2 p-5 bg-opacity-75 bg-gray-700 rounded-lg">
+      <div className="w-1/2 h-full text-white space-y-2 p-5 bg-opacity-50 bg-black rounded-lg">
         <p className="text-2xl text-white font-bold ">{character.name}</p>
         <p className="line-clamp-4 min-h-20">{character.description}</p>
         {isHovered ? (

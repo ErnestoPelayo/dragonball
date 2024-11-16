@@ -27,7 +27,7 @@ const Carrousel = ({ characters }: { characters: Character[] }) => {
   }, [isPaused, currentSlide]);
 
   return (
-    <div className="w-5/6 min-h-screen mx-auto flex flex-col items-center justify-center">
+    <div className="md:w-5/6 min-h-screen mx-auto flex flex-col items-center justify-center">
       <p className="font-black text-yellow-500 text-5xl lg:text-7xl xl:text-9xl p-2 mb-2">
         Dragonball-api
       </p>
