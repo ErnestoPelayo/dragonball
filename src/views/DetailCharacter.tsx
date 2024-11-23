@@ -2,6 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { getCharacterById } from "../api/Characters";
 import Transformations from "../components/Transformations";
+import Loading from "../components/Loading";
+import BreadCrum from "../components/BreadCrum";
 
 const DetailCharacter = () => {
   const { id } = useParams();
@@ -11,23 +13,14 @@ const DetailCharacter = () => {
     queryFn: () => getCharacterById(Number(id)),
   });
 
-  console.log(data);
-
-  if (isLoading)
-    return (
-      <p className="font-black text-yellow-500 text-5xl lg:text-7xl xl:text-9xl p-2 mb-2">
-        Loading...
-      </p>
-    );
+  if (isLoading) return <Loading />;
 
   return (
     <div className="md:w-5/6 mx-auto">
       <p className="font-black text-yellow-500 text-5xl lg:text-7xl xl:text-9xl p-2 mb-4">
         Fighter
       </p>
-      <button className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-lg mb-4">
-        <Link to={`/`}>Volver</Link>
-      </button>
+      <BreadCrum />
       {data && data.data && (
         <div className="flex flex-col space-y-6">
           {/* About Section */}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Character } from "../types";
 import Card from "./Card";
 import { Link } from "react-router-dom";
+import BreadCrum from "./BreadCrum";
 
 const Carrousel = ({ characters }: { characters: Character[] }) => {
   const [currentSlide, setCurrentSlide] = useState(0);

@@ -2,21 +2,23 @@ import { useQuery } from "@tanstack/react-query";
 import { getCharacters } from "../api/Characters";
 import { Link } from "react-router-dom";
 import { Character } from "../types";
+import BreadCrum from "../components/BreadCrum";
+import Loading from "../components/Loading";
 
 const Main = () => {
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["characters"],
     queryFn: getCharacters,
   });
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="w-5/6 mx-auto">
       <p className="font-black text-yellow-500 text-5xl lg:text-7xl xl:text-6xl p-2 mb-2">
         All Fighters of Dragon Ball
       </p>
-      <button className="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-lg">
-        <Link to={`/`}>Volver</Link>
-      </button>
+      <BreadCrum />
       <div className="flex flex-wrap justify-center gap-2">
         {data?.data.items.map((character: Character) => (
           <Link key={character.id} to={`/character/${character.id}`}>
